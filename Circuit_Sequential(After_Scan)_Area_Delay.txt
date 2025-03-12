@@ -1,0 +1,77 @@
+Using CLASS.DB:
+
+Area Report after scan cell insertion:
+
+****************************************
+Report : area
+Design : circuit1158_ffp
+Version: O-2018.06-SP1
+Date   : Mon Apr 15 14:29:05 2024
+****************************************
+ 
+Information: Updating design information... (UID-85)
+Library(s) Used:
+
+    class (File: /proj/cad/synopsys/synopsys_2018/syn_vO-2018.06-SP1/libraries/syn/class.db)
+ 
+Number of ports:                            6
+Number of nets:                            14
+Number of cells:                           10
+Number of combinational cells:              7
+Number of sequential cells:                 3
+Number of macros/black boxes:               0
+Number of buf/inv:                          1
+Number of references:                       5
+ 
+Combinational area:                 13.000000
+Buf/Inv area:                        1.000000
+Noncombinational area:              27.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (Wire load has zero net area)
+ 
+Total cell area:                    40.000000
+Total area:                 undefined
+
+***** End Of Report *****
+
+Timing report after scan cell insertion:
+
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+        -sort_by group
+Design : circuit1158_ffp
+Version: O-2018.06-SP1
+Date   : Mon Apr 15 14:31:20 2024
+****************************************
+ 
+Operating Conditions: nom_pvt   Library: class
+Wire Load Model Mode: top
+ 
+  Startpoint: FF2 (rising edge-triggered flip-flop)
+  Endpoint: z (output port)
+  Path Group: (none)
+  Path Type: max
+ 
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  circuit1158_ffp    05x05                 class
+ 
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  FF2/CP (FD1S)                            0.00       0.00 r
+  FF2/Q (FD1S)                             1.57       1.57 f
+  G2/Z (OR3)                               1.34       2.91 f
+  G3/Z (AN2I)                              0.67       3.57 f
+  G4/Z (OR2I)                              0.68       4.25 f
+  G5/Z (IVI)                               0.20       4.45 r
+  z (out)                                  0.00       4.45 r
+  data arrival time                                   4.45
+  -----------------------------------------------------------
+  (Path is unconstrained)
+ 
+ 
+
+***** End Of Report *****

@@ -1,0 +1,196 @@
+Reading the verilog file:
+
+BUILD-T> read_netlist /home/eng/s/skm210012/SYNOPSYS/WORK/class.v -library
+  Begin reading netlist ( /home/eng/s/skm210012/SYNOPSYS/WORK/class.v )... 
+  End parsing Verilog file /home/eng/s/skm210012/SYNOPSYS/WORK/class.v with 0 errors. 
+  End reading netlist: #modules=129, top=BIDI, #lines=1039, CPU_time=0.00 sec, Memory=0MB 
+BUILD-T> read_netlist /home/eng/s/skm210012/SYNOPSYS/WORK/circuit1158_ffp_scan.v
+  Begin reading netlist ( /home/eng/s/skm210012/SYNOPSYS/WORK/circuit1158_ffp_scan.v )... 
+  End parsing Verilog file /home/eng/s/skm210012/SYNOPSYS/WORK/circuit1158_ffp_scan.v with 0 errors. 
+  End reading netlist: #modules=1, top=circuit1158_ffp, #lines=25, CPU_time=0.00 sec, Memory=0MB 
+
+Building ATPG:
+BUILD-T> run_build_model circuit1158_ffp
+  ------------------------------------------------------------------------------ 
+  Begin build model for topcut = circuit1158_ffp ... 
+  ------------------------------------------------------------------------------ 
+  There were 16 primitives and 3 faultable pins removed during model optimizations 
+ Warning: Rule N20 (underspecified UDP) was violated 1 times.
+
+  End build model: #primitives=22, CPU_time=0.01 sec, Memory=0MB 
+  ------------------------------------------------------------------------------ 
+  Begin learning analyses... 
+  End learning analyses, total learning CPU time=0.00 sec. 
+  ------------------------------------------------------------------------------ 
+
+DRC Check:
+DRC-T> set_drc /home/eng/s/skm210012/SYNOPSYS/WORK/circuit1158_ffp_scan.stil
+DRC-T> run_drc
+  ------------------------------------------------------------------------------ 
+  Begin scan design rules checking... 
+  ------------------------------------------------------------------------------ 
+  Begin reading test protocol file /home/eng/s/skm210012/SYNOPSYS/WORK/circuit1158_ffp_scan.stil... 
+  End parsing STIL file /home/eng/s/skm210012/SYNOPSYS/WORK/circuit1158_ffp_scan.stil with 0 errors. 
+  Test protocol file reading completed, CPU time=0.00 sec. 
+  ------------------------------------------------------------------------------ 
+  Begin simulating test protocol procedures... 
+  Test protocol simulation completed, CPU time=0.00 sec. 
+  ------------------------------------------------------------------------------ 
+  Begin scan chain operation checking... 
+  Chain 1 successfully traced with 3 scan_cells. 
+  Scan chain operation checking completed, CPU time=0.00 sec. 
+  ------------------------------------------------------------------------------ 
+  Begin clock rules checking... 
+  Clock rules checking completed, CPU time=0.00 sec. 
+  Clock grouping results: #pairs=0, #groups=0, #serial_pairs=0, #disturbed_pairs=0, CPU time=0.00 sec. 
+  ------------------------------------------------------------------------------ 
+  Begin nonscan rules checking... 
+  Nonscan cell summary: #DFF=0  #DLAT=0  #RAM_outs=0  tla_usage_type=none 
+  Nonscan rules checking completed, CPU time=0.00 sec. 
+  ------------------------------------------------------------------------------ 
+  Begin DRC dependent learning... 
+  Fast-sequential depth results: control=0(0), observe=0(0), detect=0(0), CPU time=0.00 sec 
+  DRC dependent learning completed, CPU time=0.00 sec. 
+  ------------------------------------------------------------------------------ 
+  DRC Summary Report 
+  ------------------------------------------------------------------------------ 
+  No violations occurred during DRC process. 
+  Design rules checking was successful, total CPU time=0.00 sec. 
+ ------------------------------------------------------------------------------ 
+
+ATPG:
+ ATPG performed for stuck fault model using internal pattern source. 
+  ---------------------------------------------------------- 
+  #patterns     #faults     #ATPG faults  test      process 
+  stored     detect/active  red/au/abort  coverage  CPU time 
+  ---------  -------------  ------------  --------  -------- 
+  Begin deterministic ATPG: #uncollapsed_faults=56, abort_limit=10... 
+  8              48      0         4/0/0   100.00%      0.00 
+   
+      Uncollapsed Stuck Fault Summary Report 
+  ----------------------------------------------- 
+  fault class                     code   #faults 
+  ------------------------------  ----  --------- 
+  Detected                         DT         76 
+  Possibly detected                PT          0 
+  Undetectable                     UD          8 
+  ATPG untestable                  AU          0 
+  Not detected                     ND          0 
+  ----------------------------------------------- 
+  total faults                                84 
+  test coverage                           100.00% 
+  fault coverage                           90.48% 
+  ----------------------------------------------- 
+             Pattern Summary Report 
+  ----------------------------------------------- 
+  #internal patterns                           8 
+      #basic_scan patterns                     8 
+  ----------------------------------------------- 
+TEST-T> 
+
+Faults Reported:
+sa0   DI   clk   (_PI)   ( 1: 1/0/0, SCOAP=1/1/3 0/0/0/0 ) 
+  sa1   DI   clk   (_PI)   ( 2: 1/1/0, SCOAP=1/1/3 0/0/0/0 ) 
+  sa0   DI   test_si   (_PI)   ( 3: 2/0/0, SCOAP=1/1/2 0/0/0/0 ) 
+  sa0   DS   FF1/D   (FD1S)   ( 4: 8/0/2, SCOAP=2/2/1 0/0/0/0 ) 
+  sa1   DS   FF1/D   (FD1S)   ( 5: 8/1/2, SCOAP=2/2/1 0/0/0/0 ) 
+  sa1   DS   FF1/TE   (FD1S)   ( 6: 8/1/1, SCOAP=2/2/1 0/0/0/0 ) 
+  sa1   DI   FF1/Q   (FD1S)   ( 7: 19/1/0, SCOAP=1/1/0 0/0/0/0 ) 
+  sa0   DI   FF1/Q   (FD1S)   ( 8: 19/0/0, SCOAP=1/1/0 0/0/0/0 ) 
+  sa0   DI   FF1/TE   (FD1S)   ( 9: 8/0/1, SCOAP=2/2/1 0/0/0/0 ) 
+  sa1   DI   FF1/CP   (FD1S)   ( 10: 7/1/1, SCOAP=1/1/3 0/0/0/0 ) 
+  sa0   DI   FF1/CP   (FD1S)   ( 11: 7/0/1, SCOAP=1/1/3 0/0/0/0 ) 
+  sa1   DI   test_si   (_PI)   ( 12: 2/1/0, SCOAP=1/1/2 0/0/0/0 ) 
+  sa0   DI   test_se   (_PI)   ( 13: 3/0/0, SCOAP=1/1/3 0/0/0/0 ) 
+  sa1   DS   test_se   (_PI)   ( 14: 3/1/0, SCOAP=1/1/3 0/0/0/0 ) 
+  sa0   DI   FF3/CP   (FD1S)   ( 15: 13/0/1, SCOAP=1/1/3 0/0/0/0 ) 
+  sa1   DS   G7/Z   (AN2I)   ( 16: 15/1/0, SCOAP=1/5/2 0/0/0/0 ) 
+  sa1   DS   G6/Z   (AN2I)   ( 17: 14/1/0, SCOAP=1/4/3 0/0/0/0 ) 
+  sa1   DS   G6/A   (AN2I)   ( 18: 14/1/1, SCOAP=1/4/3 0/0/0/0 ) 
+  sa1   DS   G6/B   (AN2I)   ( 19: 14/1/2, SCOAP=1/4/3 0/0/0/0 ) 
+  sa1   DS   FF3/TE   (FD1S)   ( 20: 16/1/1, SCOAP=2/2/1 0/0/0/0 ) 
+  sa0   DS   G7/Z   (AN2I)   ( 21: 15/0/0, SCOAP=1/5/2 0/0/0/0 ) 
+  sa1   UR   G7/A   (AN2I)   ( 22: 15/1/2, SCOAP=1/5/2 0/0/0/0 ) 
+  sa1   DI   FF3/Q   (FD1S)   ( 23: 17/1/0, SCOAP=1/1/0 0/0/0/0 ) 
+  sa0   DI   FF3/Q   (FD1S)   ( 24: 17/0/0, SCOAP=1/1/0 0/0/0/0 ) 
+  sa1   DI   FF3/TI   (FD1S)   ( 25: 16/1/3, SCOAP=2/2/1 0/0/0/0 ) 
+  sa0   DI   FF3/TI   (FD1S)   ( 26: 16/0/3, SCOAP=2/2/1 0/0/0/0 ) 
+  sa0   DI   FF3/TE   (FD1S)   ( 27: 16/0/1, SCOAP=2/2/1 0/0/0/0 ) 
+  sa1   DI   FF3/CP   (FD1S)   ( 28: 13/1/1, SCOAP=1/1/3 0/0/0/0 ) 
+  sa0   DI   FF2/CP   (FD1S)   ( 29: 10/0/1, SCOAP=1/1/3 0/0/0/0 ) 
+  sa0   DS   FF2/D   (FD1S)   ( 30: 11/0/2, SCOAP=2/2/1 0/0/0/0 ) 
+  sa1   DS   FF2/D   (FD1S)   ( 31: 11/1/2, SCOAP=2/2/1 0/0/0/0 ) 
+  sa1   DS   FF2/TE   (FD1S)   ( 32: 11/1/1, SCOAP=2/2/1 0/0/0/0 ) 
+  sa1   DI   FF2/Q   (FD1S)   ( 33: 18/1/0, SCOAP=1/1/0 0/0/0/0 ) 
+  sa0   DI   FF2/Q   (FD1S)   ( 34: 18/0/0, SCOAP=1/1/0 0/0/0/0 ) 
+  sa1   DI   FF2/TI   (FD1S)   ( 35: 11/1/3, SCOAP=2/2/1 0/0/0/0 ) 
+  sa0   DI   FF2/TI   (FD1S)   ( 36: 11/0/3, SCOAP=2/2/1 0/0/0/0 ) 
+  sa0   DI   FF2/TE   (FD1S)   ( 37: 11/0/1, SCOAP=2/2/1 0/0/0/0 ) 
+  sa1   DI   FF2/CP   (FD1S)   ( 38: 10/1/1, SCOAP=1/1/3 0/0/0/0 ) 
+  sa0   DI   test_so   (_PO)   ( 39: 21/0/0, SCOAP=1/1/0 0/0/0/0 ) 
+  sa1   DI   test_so   (_PO)   ( 40: 21/1/0, SCOAP=1/1/0 0/0/0/0 ) 
+  sa0   UR   G2/C   (OR3)   ( 41: 4/0/3, SCOAP=3/1/3 0/0/0/0 ) 
+  sa1   DS   G3/Z   (AN2I)   ( 42: 6/1/0, SCOAP=1/3/1 0/0/0/0 ) 
+  sa1   DS   G1/Z   (AN2I)   ( 43: 5/1/0, SCOAP=1/2/2 0/0/0/0 ) 
+  sa0   DS   G2/A   (OR3)   ( 44: 4/0/1, SCOAP=3/1/3 0/0/0/0 ) 
+  sa1   DS   G1/A   (AN2I)   ( 45: 5/1/1, SCOAP=1/2/2 0/0/0/0 ) 
+  sa1   DS   G1/B   (AN2I)   ( 46: 5/1/2, SCOAP=1/2/2 0/0/0/0 ) 
+  sa0   DS   G3/Z   (AN2I)   ( 47: 6/0/0, SCOAP=1/3/1 0/0/0/0 ) 
+  sa1   UR   G2/Z   (OR3)   ( 48: 4/1/0, SCOAP=3/1/3 0/0/0/0 ) 
+  sa0   UR   G2/B   (OR3)   ( 49: 4/0/2, SCOAP=3/1/3 0/0/0/0 ) 
+  sa0   DS   x   (_PI)   ( 50: 0/0/0, SCOAP=1/1/3 0/0/0/0 ) 
+  sa1   DS   x   (_PI)   ( 51: 0/1/0, SCOAP=1/1/3 0/0/0/0 ) 
+  sa0   DS   z   (_PO)   ( 52: 20/0/0, SCOAP=1/2/0 0/0/0/0 ) 
+  sa1   DS   z   (_PO)   ( 53: 20/1/0, SCOAP=1/2/0 0/0/0/0 ) 
+  sa0   DS   G4/Z   (OR2I)   ( 54: 9/0/0, SCOAP=2/1/0 0/0/0/0 ) 
+  sa1   DS   G4/Z   (OR2I)   ( 55: 9/1/0, SCOAP=2/1/0 0/0/0/0 ) 
+  sa0   DS   G4/A   (OR2I)   ( 56: 9/0/2, SCOAP=2/1/0 0/0/0/0 ) 
+  sa0   DS   G4/B   (OR2I)   ( 57: 9/0/1, SCOAP=2/1/0 0/0/0/0 ) 
+
+Patterns Reported:
+
+Pattern 0 (basic_scan-chain_test) 
+  Time 0: load 1 =          001 
+  Time 1: force_all_pis =   10X1 
+  Time 2: measure_all_pos = 00 
+  Time 3: unload 1 =        001 
+  Pattern 1 (basic_scan) 
+  Time 0: load 1 =          101 
+  Time 1: force_all_pis =   0001 
+  Time 2: measure_all_pos = 11 
+  Time 3: unload 1 =        101 
+  Pattern 2 (basic_scan) 
+  Time 0: load 1 =          010 
+  Time 1: force_all_pis =   0010 
+  Time 2: measure_all_pos = 00 
+  Time 3: pulse clocks  clk (1) 
+  Time 4: unload 1 =        010 
+  Pattern 3 (basic_scan) 
+  Time 0: load 1 =          101 
+  Time 1: force_all_pis =   1010 
+  Time 2: measure_all_pos = 01 
+  Time 3: pulse clocks  clk (1) 
+  Time 4: unload 1 =        111 
+  Pattern 4 (basic_scan) 
+  Time 0: load 1 =          001 
+  Time 1: force_all_pis =   1010 
+  Time 2: measure_all_pos = 00 
+  Time 3: pulse clocks  clk (1) 
+  Time 4: unload 1 =        011 
+  Pattern 5 (basic_scan) 
+  Time 0: load 1 =          110 
+  Time 1: force_all_pis =   0000 
+  Time 2: measure_all_pos = 01 
+  Time 3: pulse clocks  clk (1) 
+  Time 4: unload 1 =        010 
+  Pattern 6 (basic_scan) 
+  Time 0: load 1 =          001 
+  Time 1: force_all_pis =   0010 
+  Time 2: measure_all_pos = 10 
+  Time 3: pulse clocks  clk (1) 
+  Time 4: unload 1 =        000 
+  Pattern 7 (basic_scan) 
+  Time 0: load 1 =          000 
+  Time 1: force_all_pis =   1011 
+  Time 2: measure_all_pos = 10 
+  Time 3: unload 1 =        000 

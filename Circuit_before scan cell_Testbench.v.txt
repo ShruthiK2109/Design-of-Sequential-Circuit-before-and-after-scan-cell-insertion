@@ -1,0 +1,18 @@
+module tb_circuit1158_ffp();
+reg x,clk;
+wire z;
+circuit1158_ffp uut(.x(x),.z(z),.clk(clk));
+always #10 clk = ~clk;
+initial begin
+clk <= 0;
+x <= 0;
+#100
+x <= 1;
+#100
+$finish;
+end
+endmodule
+config cf_circuit1158_ffp;
+design WORK.tb_circuit1158_ffp;
+default liblist WORK;
+endconfig

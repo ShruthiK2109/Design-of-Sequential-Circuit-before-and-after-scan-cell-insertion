@@ -1,0 +1,88 @@
+design_vision> set_scan_configuration -style multiplexed_flip_flop
+Accepted scan configuration for modes: all_dft
+1
+design_vision> set_scan_configuration -chain_count 1
+Accepted scan configuration for modes: all_dft
+1
+design_vision> set_dft_signal -view existing_dft -type ScanClock -port clk -timing {1 10}
+Accepted dft signal specification for modes: all_dft
+1
+design_vision> create_test_protocol -capture_procedure single_clock
+In mode: all_dft...
+
+Information: Starting test protocol creation. (TEST-219)
+  ...reading user specified clock signals...
+Information: Identified system/test clock port clk (1.0,10.0). (TEST-265)
+  ...reading user specified asynchronous signals...
+1
+design_vision> insert_dft
+
+Information: Starting test design rule checking. (TEST-222)
+Test Design rule checking did not find violations
+Information: Test design rule checking completed. (TEST-123)
+  Architecting Scan Chains
+  Routing Scan Chains
+  Routing Global Signals
+  Mapping New Logic
+Resetting current test mode
+
+1
+design_vision> current_design
+Current design is 'circuit1158_ffp'.
+{circuit1158_ffp}
+design_vision> dft_drc -verbose
+In mode: Internal_scan...
+  Design has scan chains in this mode
+  Design is scan routed
+  Post-DFT DRC enabled
+
+Information: Starting test design rule checking. (TEST-222)
+  Loading test protocol
+  ...basic checks...
+  ...basic sequential cell checks...
+  ...checking vector rules...
+  ...checking clock rules...
+  ...checking scan chain rules...
+  ...checking scan compression rules...
+  ...checking X-state rules...
+  ...checking tristate rules...
+  ...extracting scan details...
+
+-----------------------------------------------------------------
+  DRC Report
+
+  Total violations: 0
+
+-----------------------------------------------------------------
+
+
+Test Design rule checking did not find violations
+
+-----------------------------------------------------------------
+  Sequential Cell Report
+
+  0 out of 3 sequential cells have violations
+
+-----------------------------------------------------------------
+
+SEQUENTIAL CELLS WITHOUT VIOLATIONS
+      *   3 cells are valid scan cells
+         FF3
+         FF2
+         FF1
+
+....Inferring feed-through connections....
+Information: Test design rule checking completed. (TEST-123)
+Current design is 'circuit1158_ffp'.
+Current design is 'circuit1158_ffp'.
+1
+design_vision> check_design -multiple_designs
+1
+design_vision> write_test_protocol -o circuit1158_ffp_scan.stil
+Writing test protocol file '/home/eng/s/skm210012/SYNOPSYS/WORK/circuit1158_ffp_scan.stil' for mode 'Internal_scan'...
+Warning: The multi-clock protocol requires that the strobe time be before a clock's pulse if it is used for transition fault testing. (TESTXG-56)
+1
+design_vision> write -hierarchy -format verilog -output circuit1158_ffp_scan.v
+Writing verilog file '/home/eng/s/skm210012/SYNOPSYS/WORK/circuit1158_ffp_scan.v'.
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+1

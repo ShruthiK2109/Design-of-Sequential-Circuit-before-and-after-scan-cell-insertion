@@ -1,0 +1,16 @@
+module circuit1158_ffp(x,z,clk);
+input x,clk;
+output z;
+wire c3,c4,c5,c8,c9,Y3,y1,y2,y3;
+wire qn1,qn2,qn3;
+GTECH_AND2 G1( .A(x), .B(y1), .Z(c3));
+GTECH_OR3 G2( .A(x), .B(y2), .C(y3), .Z(c4));
+GTECH_AND2 G3( .A(c3), .B(c4), .Z(c5));
+GTECH_FD1 FF1( .D(c5), .CP(clk),.Q(y1),.QN(qn1));
+GTECH_OR2 G4( .A(c5), .B(y2), .Z(c8));
+GTECH_FD1 FF2( .D(c8), .CP(clk),.Q(y2),.QN(qn2));
+GTECH_NOT G5( .A(c8), .Z(z));
+GTECH_AND2 G6( .A(c5), .B(y3), .Z(c9));
+GTECH_AND2 G7( .A(c8), .B(c9), .Z(Y3));
+GTECH_FD1 FF3( .D(Y3), .CP(clk), .Q(y3),.QN(qn3));
+endmodule
